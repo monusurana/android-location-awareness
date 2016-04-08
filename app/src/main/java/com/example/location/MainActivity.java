@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private final String LOG_TAG = "LocationApp";
-    private TextView mTxtOutput;
+    private TextView mLatText;
+    private TextView mLongText;
     private GoogleApiClient mGoogleApiClient;
     private LocationListener mLocationListener;
 
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTxtOutput = (TextView) findViewById(R.id.txtOutput);
+        mLatText = (TextView) findViewById(R.id.latitude_text);
+        mLongText = (TextView) findViewById(R.id.longitude_text);
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                 if (grantResults.length > 0
+                if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -101,7 +103,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public void onLocationChanged(Location location) {
         Log.i(LOG_TAG, location.toString());
-        mTxtOutput.setText(location.toString());
+        mLatText.setText(Double.toString(location.getLatitude()));
+        mLongText.setText(Double.toString(location.getLongitude()));
     }
 
     // onConnectionFailedListener
