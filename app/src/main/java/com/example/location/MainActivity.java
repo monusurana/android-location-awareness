@@ -1,38 +1,36 @@
 package com.example.location;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import com.google.android.gms.location.LocationListener;
-
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
+import com.example.location.geofence.MyActivityGeofence;
+import com.example.location.location.MyActivityLocation;
+import com.example.location.recognition.MyActivityRecognition;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private final String LOG_TAG = "LocationApp";
-    private TextView mLatText;
-    private TextView mLongText;
-    private GoogleApiClient mGoogleApiClient;
-    private LocationListener mLocationListener;
+
+    private Button mStartLocationButton;
+    private Button mStartRecognitionButton;
+    private Button mStartGeofenceButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mLatText = (TextView) findViewById(R.id.latitude_text);
-        mLongText = (TextView) findViewById(R.id.longitude_text);
+        mStartLocationButton = (Button) findViewById(R.id.button_location);
+        mStartRecognitionButton = (Button) findViewById(R.id.button_recognition);
+        mStartGeofenceButton = (Button) findViewById(R.id.button_geofence);
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -42,12 +40,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
 
+            changeButtonState(false);
+
         } else {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addApi(LocationServices.API)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .build();
+            changeButtonState(true);
         }
     }
 
@@ -57,65 +53,33 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    mGoogleApiClient = new GoogleApiClient.Builder(this)
-                            .addApi(LocationServices.API)
-                            .addConnectionCallbacks(this)
-                            .addOnConnectionFailedListener(this)
-                            .build();
-
-                    mGoogleApiClient.connect();
-
+                    changeButtonState(true);
                 } else {
-
+                    Toast.makeText(this, getString(R.string.enable_location), Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
         }
     }
 
-    @Override
-    protected void onStop() {
-        if (mGoogleApiClient != null)
-            mGoogleApiClient.disconnect();
-        super.onStop();
+    public void startLocation(View view) {
+        Intent intent = new Intent(this, MyActivityLocation.class);
+        startActivity(intent);
     }
 
-    @Override
-    protected void onStart() {
-        if (mGoogleApiClient != null)
-            mGoogleApiClient.connect();
-        super.onStart();
+    public void startRecognition(View view) {
+        Intent intent = new Intent(this, MyActivityRecognition.class);
+        startActivity(intent);
     }
 
-    // ConnectionCallbacks
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.i(LOG_TAG, "onConnected");
-        LocationRequest mLocationRequest = LocationRequest.create();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+    public void startGeofence(View view) {
+        Intent intent = new Intent(this, MyActivityGeofence.class);
+        startActivity(intent);
     }
 
-    // Location Listener
-    @Override
-    public void onLocationChanged(Location location) {
-        Log.i(LOG_TAG, location.toString());
-        mLatText.setText(Double.toString(location.getLatitude()));
-        mLongText.setText(Double.toString(location.getLongitude()));
-    }
-
-    // onConnectionFailedListener
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.i(LOG_TAG, "Suspended");
-    }
-
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i(LOG_TAG, "Failed");
+    private void changeButtonState(boolean state) {
+        mStartLocationButton.setEnabled(state);
+        mStartRecognitionButton.setEnabled(state);
+        mStartGeofenceButton.setEnabled(state);
     }
 }

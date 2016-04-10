@@ -1,8 +1,9 @@
-package com.example.location;
+package com.example.location.geofence;
 
 import android.content.Context;
 import android.content.res.Resources;
 
+import com.example.location.R;
 import com.google.android.gms.location.GeofenceStatusCodes;
 
 /**
@@ -12,7 +13,8 @@ public class GeofenceErrorMessages {
     /**
      * Prevents instantiation.
      */
-    private GeofenceErrorMessages() {}
+    private GeofenceErrorMessages() {
+    }
 
     /**
      * Returns the error string for a geofencing error code.

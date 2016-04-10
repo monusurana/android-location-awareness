@@ -1,6 +1,7 @@
 package com.example.location;
 
 import com.google.android.gms.maps.model.LatLng;
+
 import java.util.HashMap;
 
 /**
@@ -48,14 +49,15 @@ public final class Constants {
      * Map for storing information about airports in the San Francisco bay area.
      */
     public static final HashMap<String, LatLng> BAY_AREA_LANDMARKS = new HashMap<String, LatLng>();
+
     static {
         // San Francisco International Airport.
         BAY_AREA_LANDMARKS.put("SFO", new LatLng(37.621313, -122.378955));
 
         // Googleplex.
-        BAY_AREA_LANDMARKS.put("Google", new LatLng(37.422611,-122.0840577));
+        BAY_AREA_LANDMARKS.put("Google", new LatLng(37.422611, -122.0840577));
 
         // Test
-        BAY_AREA_LANDMARKS.put("Home", new LatLng(32.9088168,-117.1488742));
+        BAY_AREA_LANDMARKS.put("Home", new LatLng(32.9088168, -117.1488742));
     }
 }

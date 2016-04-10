@@ -1,4 +1,4 @@
-package com.example.location;
+package com.example.location.geofence;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.location.Constants;
+import com.example.location.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -29,20 +31,20 @@ import java.util.Map;
  * Demonstrates how to create and remove geofences using the GeofencingApi. Uses an IntentService
  * to monitor geofence transitions and creates notifications whenever a device enters or exits
  * a geofence.
- *
+ * <p/>
  * This sample requires a device's Location settings to be turned on. It also requires
  * the ACCESS_FINE_LOCATION permission, as specified in AndroidManifest.xml.
- *
+ * <p/>
  * Note that this Activity implements ResultCallback<Status>, requiring that
  * {@code onResult} must be defined. The {@code onResult} runs when the result of calling
  * {@link GeofencingApi#addGeofences(GoogleApiClient, GeofencingRequest, PendingIntent)}  addGeofences()} or
  * {@link com.google.android.gms.location.GeofencingApi#removeGeofences(GoogleApiClient, java.util.List)}  removeGeofences()}
  * becomes available.
  */
-public class ActivityGeofence extends AppCompatActivity implements
+public class MyActivityGeofence extends AppCompatActivity implements
         ConnectionCallbacks, OnConnectionFailedListener, ResultCallback<Status> {
 
-    protected static final String TAG = "MainActivity";
+    protected static final String TAG = "MyActivityLocation";
 
     /**
      * Provides the entry point to Google Play services.
@@ -224,7 +226,7 @@ public class ActivityGeofence extends AppCompatActivity implements
     /**
      * Runs when the result of calling addGeofences() and removeGeofences() becomes available.
      * Either method can complete successfully or with an error.
-     *
+     * <p/>
      * Since this activity implements the {@link ResultCallback} interface, we are required to
      * define this method.
      *

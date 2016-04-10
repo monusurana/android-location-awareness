@@ -7,36 +7,25 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.location.ActivityGeofence">
+    tools:context=".geofence.MyActivityGeofence">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_geofences"
         android:id="@+id/geofence"
-        android:onClick="addGeofencesButtonHandler"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/remove_geofences"
-        android:id="@+id/remove_geofences_button"
-        android:onClick="removeGeofencesButtonHandler"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:onClick="addGeofencesButtonHandler"
+        android:text="@string/add_geofences" />
+
+    <Button
+        android:id="@+id/remove_geofences_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <!--<Button-->
-        <!--android:id="@+id/remove_geofences_button"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:onClick="removeGeofencesButtonHandler"-->
-        <!--android:text="@string/remove_geofences"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentEnd="true" />-->
-
+        android:layout_alignParentTop="true"
+        android:onClick="removeGeofencesButtonHandler"
+        android:text="@string/remove_geofences" />
 </RelativeLayout>

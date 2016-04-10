@@ -1,4 +1,4 @@
-package com.example.location;
+package com.example.location.recognition;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.location.Constants;
+import com.example.location.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 
 public class MyActivityRecognition extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ResultCallback<Status> {
 
-    protected static final String TAG="activity";
+    protected static final String TAG = "activity";
 
     protected ActivityDetectionBroadcastReceiver mBroadcastReceiver;
     protected GoogleApiClient mGoogleApiClient;
@@ -71,7 +73,6 @@ public class MyActivityRecognition extends AppCompatActivity implements GoogleAp
         // requestActivityUpdates() and removeActivityUpdates().
         return PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
-
 
     public void removeActivityUpdatesButtonHandler(View view) {
         if (!mGoogleApiClient.isConnected()) {
@@ -147,7 +148,7 @@ public class MyActivityRecognition extends AppCompatActivity implements GoogleAp
      */
     public String getActivityString(int detectedActivityType) {
         Resources resources = this.getResources();
-        switch(detectedActivityType) {
+        switch (detectedActivityType) {
             case DetectedActivity.IN_VEHICLE:
                 return resources.getString(R.string.in_vehicle);
             case DetectedActivity.ON_BICYCLE:
@@ -183,8 +184,8 @@ public class MyActivityRecognition extends AppCompatActivity implements GoogleAp
                     intent.getParcelableArrayListExtra(Constants.ACTIVITY_EXTRA);
 
             String strStatus = "";
-            for(DetectedActivity thisActivity: updatedActivities) {
-                strStatus +=  getActivityString(thisActivity.getType()) + ":" + thisActivity.getConfidence() + "%\n";
+            for (DetectedActivity thisActivity : updatedActivities) {
+                strStatus += getActivityString(thisActivity.getType()) + ":" + thisActivity.getConfidence() + "%\n";
             }
             mStatusText.setText(strStatus);
         }
